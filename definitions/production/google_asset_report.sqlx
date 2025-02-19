@@ -1,6 +1,7 @@
 config {
     type: 'table'
   , schema: 'production'
+    , tags: ["full funnel"]
 }
 
 select
