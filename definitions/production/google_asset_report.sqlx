@@ -9,18 +9,18 @@ select
   , cast(datetime_trunc(cast(date as datetime), week(monday)) as date) as week
   , cast(datetime_trunc(cast(date as datetime), month) as date) as month
   , 'google' as platform
-  , lower(campaign_name) as campaign
-  , lower(ad_group_name) as ad_group
-  , ${transformations.createCampaignType('campaign_name')} as campaign_type
-  , ${transformations.createRegionFromCampaign('campaign_name')} as region
-  , lower(asset_level) as asset_level
-  , lower(asset_type) as asset_type
-  , asset_name as asset
-  , sum(spend) as spend
-  , sum(clicks) as clicks
-  , sum(impressions) as impressions
-  , sum(conversions) as conversions
+  , lower(campaign__google_ads) as campaign
+  , lower(ad_group_name__google_ads) as ad_group
+  , ${transformations.createCampaignType('campaign__google_ads')} as campaign_type
+  , ${transformations.createRegionFromCampaign('campaign__google_ads')} as region
+  , lower(asset_level__google_ads) as asset_level
+  , lower(asset_type__google_ads) as asset_type
+  , asset__google_ads as asset
+  , sum(cost__google_ads) as spend
+  , sum(clicks__google_ads) as clicks
+  , sum(impressions__google_ads) as impressions
+  , sum(conversions__google_ads) as conversions
 from ${ref('Google_Ads_Asset_Report')}
 -- removes the business logo and business name assets
-where not regexp_contains(asset_type, '(?i)(business)')
+where not regexp_contains(asset_type__google_ads, '(?i)(business)')
 group by all
