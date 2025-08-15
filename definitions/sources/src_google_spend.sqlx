@@ -12,7 +12,7 @@ date
 ,lower(Campaign__AdWords) as campaign
 -- ,cast(Campaign_ID__AdWords as int) as campaign_id
 ,lower(Ad_Group_Name__AdWords) as ad_group
-,cast(Ad_Group_ID__AdWords as int) as ad_group_id
+-- ,cast(Ad_Group_ID__AdWords as int) as ad_group_id
 ,sum(cost) as spend
 ,sum(clicks) as clicks
 ,sum(impressions) as impressions

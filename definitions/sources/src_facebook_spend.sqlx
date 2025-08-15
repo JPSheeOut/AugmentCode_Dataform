@@ -12,7 +12,7 @@ date
 ,lower(Campaign_Name__Facebook_Ads) as campaign
 -- ,Campaign_ID__Facebook_Ads as campaign_id
 ,Ad_Set_Name__Facebook_Ads as ad_group
-,Ad_Set_ID__Facebook_Ads as ad_group_id
+-- ,Ad_Set_ID__Facebook_Ads as ad_group_id
 ,sum(cost) as spend
 ,sum(clicks) as clicks
 ,sum(impressions) as impressions

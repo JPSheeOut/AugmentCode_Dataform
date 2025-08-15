@@ -12,7 +12,7 @@ date
 ,lower(Campaign__X_Ads) as campaign
 -- ,Campaign_ID__X_Ads as campaign_id
 ,'' as ad_group
-,0 as ad_group_id
+-- ,0 as ad_group_id
 ,sum(cost) as spend
 ,sum(clicks) as clicks
 ,sum(impressions) as impressions
