@@ -1,0 +1,22 @@
+config { 
+  type: "table"
+  , schema: "sources" 
+  , tags: ["full funnel"]
+}
+
+select 
+date
+,cast(datetime_trunc(cast(date as datetime), week) as date) as week
+,cast(datetime_trunc(cast(date as date), month) as date) as month
+,'meta' as platform 
+,lower(Campaign_Name__Facebook_Ads) as campaign
+,Campaign_ID__Facebook_Ads as campaign_id
+,Ad_Set_Name__Facebook_Ads as ad_group
+,Ad_Set_ID__Facebook_Ads as ad_group_id
+,sum(cost) as spend
+,sum(clicks) as clicks
+,sum(impressions) as impressions
+
+
+FROM ${ref('funnel_export', 'Facebook_Ads')} 
+group by 1,2,3,4,5,6,7,8

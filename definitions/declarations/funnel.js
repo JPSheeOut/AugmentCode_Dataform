@@ -13,3 +13,13 @@ declare({
   name: "Google_Ads_Asset_Report",
 });
 
+declare({
+  schema: "funnel_export",
+  name: "X_Ads",
+});
+
+declare({
+  schema: "funnel_export",
+  name: "Facebook_Ads",
+});
+

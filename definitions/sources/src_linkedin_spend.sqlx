@@ -1,0 +1,21 @@
+config { 
+  type: "table"
+  , schema: "sources" 
+  , tags: ["full funnel"]
+}
+
+select 
+date
+,cast(datetime_trunc(cast(date as datetime), week) as date) as week
+,cast(datetime_trunc(cast(date as date), month) as date) as month
+,'linkedin' as platform 
+,lower(Campaign__LinkedIn) as campaign
+,0 as campaign_id
+,0 as ad_group_id
+,sum(cost) as spend
+,sum(clicks) as clicks
+,sum(impressions) as impressions
+
+
+FROM ${ref('funnel_export', 'Linkedin_Ads')} 
+group by 1,2,3,4,5,6,7,8
