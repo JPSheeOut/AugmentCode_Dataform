@@ -11,6 +11,7 @@ date
 ,'linkedin' as platform 
 ,lower(Campaign__LinkedIn) as campaign
 ,0 as campaign_id
+,'' as ad_group
 ,0 as ad_group_id
 ,sum(cost) as spend
 ,sum(clicks) as clicks
