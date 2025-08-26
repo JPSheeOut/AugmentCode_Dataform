@@ -16,6 +16,11 @@ date
 ,sum(cost) as spend
 ,sum(clicks) as clicks
 ,sum(impressions) as impressions
-
+,sum(Credit_Card_Added_Google_Ads__Google_Ads) as credit_card_added
+,sum(Demo_Form_Submitted_Google_Ads__Google_Ads) as demo_form_submitted
+,sum(Install_Google_Ads__Google_Ads) as installs
+,sum(Sign_up_Page_load_www_augmentcode_comregistration_Google_Ads__Google_Ads) as sign_up_page_loaded
+,sum(User_Became_Activated_Google_Ads__Google_Ads) as activated
+,sum(User_Signed_Up_Google_Ads__Google_Ads) as signed_up
 FROM ${ref('funnel_export', 'Google_Ads')} 
 group by 1,2,3,4,5,6
