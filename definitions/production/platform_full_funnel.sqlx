@@ -22,6 +22,6 @@ select
   , sum(sign_up_page_loaded) as sign_up_page_loaded
   , sum(activated) as activated
   , sum(signed_up) as signed_up
-
+  , sum(customer) as customer
 from ${ref('stg_combined_spend')}
 group by all

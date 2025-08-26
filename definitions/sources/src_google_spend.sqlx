@@ -22,5 +22,6 @@ date
 ,sum(Sign_up_Page_load_www_augmentcode_comregistration_Google_Ads__Google_Ads) as sign_up_page_loaded
 ,sum(User_Became_Activated_Google_Ads__Google_Ads) as activated
 ,sum(User_Signed_Up_Google_Ads__Google_Ads) as signed_up
+,sum(Customer_Created_Google_Ads__Google_Ads) as customer
 FROM ${ref('funnel_export', 'Google_Ads')} 
 group by 1,2,3,4,5,6

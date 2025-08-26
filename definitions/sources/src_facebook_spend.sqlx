@@ -22,6 +22,6 @@ date
 ,0 as sign_up_page_loaded
 ,0 as activated
 ,0 as signed_up
-
+,0 as customer
 FROM ${ref('funnel_export', 'Facebook_Ads')} 
 group by 1,2,3,4,5,6
