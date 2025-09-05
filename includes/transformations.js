@@ -13,7 +13,9 @@ function createPlatformFromCampaign(campaign) {
             when regexp_contains(${campaign}, '(?i)(^bg_)') 
               then 'bing'
             when regexp_contains(${campaign}, '(?i)(capterra)') 
-              then 'capterra'         
+              then 'capterra'     
+            when regexp_contains(${campaign}, '(?i)(x_)') 
+              then 'X'         
           else 'other'
           end`
            ;
