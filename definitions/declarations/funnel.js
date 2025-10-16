@@ -23,3 +23,7 @@ declare({
   name: "Facebook_Ads",
 });
 
+declare({
+  schema: "sources",
+  name: "augment_leads",
+});

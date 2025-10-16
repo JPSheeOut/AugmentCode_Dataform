@@ -1,0 +1,32 @@
+config {
+    type: 'table'
+  , schema: 'production'
+  , tags: ["full funnel"]
+}
+
+select
+    date_day as date
+  , cast(datetime_trunc(cast(date_day as datetime), week) as date) as week
+  , cast(datetime_trunc(cast(date_day as date), month) as date) as month
+  , ${transformations.createPlatformFromCampaign('utm_campaign')} as platform
+  , utm_campaign as campaign
+  , utm_content as ad_group
+  , ${transformations.createRegionFromCampaign('utm_campaign')} as region
+  , ${transformations.createCampaignType('utm_campaign')} as campaign_type
+  , 0 as spend
+  , 0 as impressions
+  , 0 as clicks
+  , 0 as credit_card_added
+  , 0 as demo_form_submitted
+  , 0 as installs
+  , 0 as sign_up_page_loaded
+  , 0 as activated
+  , 0 as signed_up
+  , 0 as customer
+  , sum(total_sessions) as total_sessions_attributed
+  , sum(signups_attributed) as signups_attributted
+  , sum(installation_attributed) as instllation_attributed
+  , sum(activations_attributed) as activations_attributed
+  , sum(payments_attributed) as payments_attributed
+from ${ref('augment_leads')}
+group by all

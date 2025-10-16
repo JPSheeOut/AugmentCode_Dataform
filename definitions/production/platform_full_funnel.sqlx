@@ -3,25 +3,35 @@ config {
   , schema: 'production'
   , tags: ["full funnel"]
 }
+with platform as (
+  select
+      date
+    , week
+    , month
+    , ${transformations.createPlatformFromCampaign('campaign')} as platform
+    , campaign
+    , ad_group
+    , ${transformations.createRegionFromCampaign('campaign')} as region
+    , ${transformations.createCampaignType('campaign')} as campaign_type
+    , sum(spend) as spend
+    , sum(impressions) as impressions
+    , sum(clicks) as clicks
+    , sum(credit_card_added) as credit_card_added
+    , sum(demo_form_submitted) as demo_form_submitted
+    , sum(installs) as installs
+    , sum(sign_up_page_loaded) as sign_up_page_loaded
+    , sum(activated) as activated
+    , sum(signed_up) as signed_up
+    , sum(customer) as customer
+    , 0 as total_sessions_attributed
+    , 0 as signups_attributted
+    , 0 as instllation_attributed
+    , 0 as activations_attributed
+    , 0 as payments_attributed
+  from ${ref('stg_combined_spend')}
+  group by all
+)
 
-select
-    date
-  , week
-  , month
-  , ${transformations.createPlatformFromCampaign('campaign')} as platform
-  , campaign
-  , ad_group
-  , ${transformations.createRegionFromCampaign('campaign')} as region
-  , ${transformations.createCampaignType('campaign')} as campaign_type
-  , sum(spend) as spend
-  , sum(impressions) as impressions
-  , sum(clicks) as clicks
-  , sum(credit_card_added) as credit_card_added
-  , sum(demo_form_submitted) as demo_form_submitted
-  , sum(installs) as installs
-  , sum(sign_up_page_loaded) as sign_up_page_loaded
-  , sum(activated) as activated
-  , sum(signed_up) as signed_up
-  , sum(customer) as customer
-from ${ref('stg_combined_spend')}
-group by all
+select * from platform
+union all 
+select * from ${ref('stg_modelled_leads')}
