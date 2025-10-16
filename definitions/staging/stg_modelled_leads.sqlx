@@ -25,7 +25,7 @@ select
   , 0 as customer
   , sum(total_sessions) as total_sessions_attributed
   , sum(signups_attributed) as signups_attributed
-  , sum(installation_attributed) as instllation_attributed
+  , sum(installation_attributed) as installation_attributed
   , sum(activations_attributed) as activations_attributed
   , sum(payments_attributed) as payments_attributed
 from ${ref('src_augment_leads')}
