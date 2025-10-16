@@ -1,6 +1,6 @@
 config {
     type: 'table'
-  , schema: 'production'
+  , schema: 'staging'
   , tags: ["full funnel"]
 }
 
