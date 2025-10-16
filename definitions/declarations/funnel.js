@@ -25,5 +25,5 @@ declare({
 
 declare({
   schema: "sources",
-  name: "augment_leads",
+  name: "src_augment_leads",
 });

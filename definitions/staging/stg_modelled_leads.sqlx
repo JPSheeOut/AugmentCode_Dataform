@@ -28,5 +28,5 @@ select
   , sum(installation_attributed) as instllation_attributed
   , sum(activations_attributed) as activations_attributed
   , sum(payments_attributed) as payments_attributed
-from ${ref('augment_leads')}
+from ${ref('src_augment_leads')}
 group by all
