@@ -24,7 +24,7 @@ with platform as (
     , sum(signed_up) as signed_up
     , sum(customer) as customer
     , 0 as total_sessions_attributed
-    , 0 as signups_attributted
+    , 0 as signups_attributed
     , 0 as instllation_attributed
     , 0 as activations_attributed
     , 0 as payments_attributed
