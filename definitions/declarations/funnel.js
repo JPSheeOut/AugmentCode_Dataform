@@ -27,3 +27,8 @@ declare({
   schema: "sources",
   name: "src_augment_leads",
 });
+
+declare({
+  schema: "funnel_export",
+  name: "Bing_Ads",
+});

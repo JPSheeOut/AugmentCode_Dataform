@@ -1,0 +1,27 @@
+config { 
+  type: "table"
+  , schema: "sources" 
+  , tags: ["full funnel"]
+}
+
+select 
+date
+,cast(datetime_trunc(cast(date as datetime), week) as date) as week
+,cast(datetime_trunc(cast(date as date), month) as date) as month
+,'meta' as platform 
+,lower(Campaign_Name__Microsoft_Advertising) as campaign
+-- ,Campaign_ID__Facebook_Ads as campaign_id
+,Ad_Group_ID__Microsoft_Advertising as ad_group
+-- ,Ad_Set_ID__Facebook_Ads as ad_group_id
+,sum(cost) as spend
+,sum(clicks) as clicks
+,sum(impressions) as impressions
+,0 as credit_card_added
+,0 as demo_form_submitted
+,0 as installs
+,0 as sign_up_page_loaded
+,0 as activated
+,0 as signed_up
+,0 as customer
+FROM ${ref('funnel_export', 'Bing_Ads')} 
+group by 1,2,3,4,5,6
