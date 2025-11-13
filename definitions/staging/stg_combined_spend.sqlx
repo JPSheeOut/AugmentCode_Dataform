@@ -16,3 +16,5 @@ select * from ${ref('src_google_spend')}
 -- select * from ${ref('src_reddit_spend')}
 union all
 select * from ${ref('src_x_spend')}
+union all
+select * from ${ref('src_bing_spend')}
