@@ -32,3 +32,8 @@ declare({
   schema: "funnel_export",
   name: "Bing_Ads",
 });
+
+declare({
+  schema: "funnel_export",
+  name: "reddit_ads",
+});

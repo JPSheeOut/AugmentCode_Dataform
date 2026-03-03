@@ -1,0 +1,32 @@
+config { 
+  type: "table"
+, schema: "sources"
+, tags: "full funnel"
+}
+
+SELECT
+  date
+  , CAST(DATETIME_TRUNC(CAST(date AS DATETIME), WEEK(MONDAY)) AS DATE) AS week
+  , CAST(DATETIME_TRUNC(CAST(date AS DATETIME), MONTH) AS DATE) AS month
+  , 'reddit' AS platform
+  , lower(campaign_name__reddit) as campaign
+  --, cast(Campaign_ID__Reddit as int) as campaign_id
+  , lower(ad_group_name__reddit) as ad_group
+  --, cast(Ad_Group_ID__Reddit as int) as ad_group_id
+ , sum(cost__reddit) as spend
+ , sum(clicks__reddit) as clicks
+ , sum(impressions__reddit) as impressions
+ , 0 as credit_card_added
+ , 0 as demo_form_submitted
+ , 0 as installs
+ , 0 as sign_up_page_loaded
+ , 0 as activated
+ , 0 as signed_up
+ , 0 as customer
+
+
+
+
+FROM ${ref('funnel_export','reddit_ads')}
+
+GROUP BY 1,2,3,4,5,6

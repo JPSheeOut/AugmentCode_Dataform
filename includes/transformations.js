@@ -17,7 +17,9 @@ function createPlatformFromCampaign(campaign) {
             when regexp_contains(${campaign}, '(?i)(x_)') 
               then 'X'    
             when regexp_contains(${campaign}, '(?i)(_gg_)')
-              then 'google'       
+              then 'google'
+            when regexp_contains(${campaign}, '(?i)(^re_)')
+              then 'reddit'       
           else 'other'
           end`
            ;
