@@ -34,7 +34,9 @@ SELECT
 , ap.total_budget
 , sf.latest_date
 , sf.latest_date = CURRENT_DATE() AS has_spend_today
+, DATE_DIFF(CURRENT_DATE(), sf.latest_date, DAY) AS days_behind
 , CASE
+    WHEN sf.latest_date IS NULL THEN 'no data source'
     WHEN sf.latest_date = CURRENT_DATE() THEN 'healthy'
     ELSE 'warning'
   END AS status
