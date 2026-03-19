@@ -1,0 +1,45 @@
+config {
+  type: "view"
+  , schema: "production"
+  , description: "Platform-level spend freshness check. Checks funnel_export raw data for the most accurate pipeline signal."
+}
+
+-- Checks funnel_export directly — what Funnel.io writes to.
+-- Wildcard not supported (incompatible partitioning), so UNION ALL across all platform tables.
+-- LEFT JOIN against active budgets filters to only tracked platforms.
+WITH source_freshness AS (
+  SELECT 'google' AS platform, MAX(Date) AS latest_date FROM `augmentcode.funnel_export.Google_Ads`
+  UNION ALL
+  SELECT 'linkedin', MAX(Date) FROM `augmentcode.funnel_export.Linkedin_Ads`
+  UNION ALL
+  SELECT 'reddit', MAX(Date) FROM `augmentcode.funnel_export.reddit_ads`
+  UNION ALL
+  SELECT 'bing', MAX(Date) FROM `augmentcode.funnel_export.Bing_Ads`
+  UNION ALL
+  SELECT 'facebook', MAX(Date) FROM `augmentcode.funnel_export.Facebook_Ads`
+  UNION ALL
+  SELECT 'x', MAX(Date) FROM `augmentcode.funnel_export.X_Ads`
+),
+
+active_platforms AS (
+  SELECT DISTINCT platform, SUM(budget) AS total_budget
+  FROM ${ref('budgets')}
+  WHERE status = 'Active'
+    AND budget > 0
+  GROUP BY platform
+)
+
+SELECT
+  ap.platform
+, ap.total_budget
+, sf.latest_date
+, sf.latest_date = CURRENT_DATE() AS has_spend_today
+, CASE
+    WHEN sf.latest_date = CURRENT_DATE() THEN 'healthy'
+    ELSE 'warning'
+  END AS status
+, CURRENT_DATE() AS checked_date
+, CURRENT_TIMESTAMP() AS checked_at
+FROM active_platforms ap
+LEFT JOIN source_freshness sf
+  ON lower(ap.platform) = sf.platform
