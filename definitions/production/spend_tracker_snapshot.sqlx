@@ -1,0 +1,37 @@
+config {
+  type: "incremental",
+  schema: "production",
+  description: "Daily snapshot of all campaigns with budget, spend, and status. Append-only — one row per campaign per day. Consumers calculate pacing metrics at their chosen aggregation level.",
+  bigquery: {
+    partitionBy: "snapshot_date"
+  }
+}
+
+-- Skip if today's snapshot already exists. First run of the day inserts; re-runs do nothing.
+select
+    current_date() as snapshot_date
+  , b.platform
+  , b.channel
+  , b.region
+  , b.category
+  , b.campaign_name
+  , b.start_date
+  , b.end_date
+  , any_value(b.budget) as budget
+  , coalesce(sum(f.spend), 0) as actual_spend
+  , b.status
+from ${ref('budgets')} b
+left join ${ref('platform_full_funnel')} f
+  on lower(f.campaign) = lower(b.campaign_name)
+  and f.date >= b.start_date
+  and f.date < b.end_date
+${when(incremental(), `WHERE CURRENT_DATE() > (SELECT MAX(snapshot_date) FROM ${self()})`)}
+group by
+    b.platform
+    , b.channel
+    , b.region
+    , b.category
+    , b.campaign_name
+    , b.start_date
+    , b.end_date
+    , b.status
