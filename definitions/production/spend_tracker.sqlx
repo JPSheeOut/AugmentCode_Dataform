@@ -19,7 +19,7 @@ left join ${ref('platform_full_funnel')} f
   on lower(f.campaign) = lower(b.campaign_name)
   and f.date >= b.start_date
   and f.date < b.end_date
-where b.status = 'Active'
+where b.budget > 0
 group by 
     b.platform
     , b.channel
